@@ -2,5 +2,21 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./packages/product-api"
+    },
+    {
+      "path": "./packages/product-api"
+    },
+    {
+      "path": "./packages/product-crud"
+    },
+    {
+      "path": "./packages/telegram-bot"
+    },
+    {
+      "path": "./packages/shared"
+    }
+  ]
 }

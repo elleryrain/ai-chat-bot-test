@@ -1,7 +1,8 @@
 import { Telegraf, Markup } from 'telegraf';
 import { CALLBACK_ACTIONS } from '../../config/consts';
+import { MyContext } from '../../types';
 
-export async function loadCommands(bot: Telegraf) {
+export async function loadCommands(bot: Telegraf<MyContext>) {
   const keyboard = Markup.inlineKeyboard([
     {
       text: 'Псмотреть товары',
@@ -14,13 +15,13 @@ export async function loadCommands(bot: Telegraf) {
     const product = await bot.api.getProductById(productId);
 
     if (!product) {
-      return ctx.reply('Товар не найден 😔');
+      return ctx.reply('Товар не найден');
     }
 
     const message = `
-   🎁 *${product.name}*
-  💵 Цена: $${product.price}
-  📝 Описание: ${product.desc}
+  Название: *${product.name}*
+  Цена: $${product.price}
+  Описание: ${product.desc}
     `;
 
     await ctx.reply(message);
@@ -33,7 +34,17 @@ export async function loadCommands(bot: Telegraf) {
 
     await ctx.reply(message);
   });
+  bot.command('createProduct', async (ctx) => {
+    console.log('Команда /createProduct получена');
+    ctx.session = {};
+    await ctx.scene.enter('super-wizard');
+  });
 
+  bot.hears('/updateProduct', async (ctx) => {
+    console.log('Команда /updateProduct получена');
+    ctx.session = {};
+    await ctx.scene.enter('super-wizard-update-product');
+  });
   bot.start(
     async (ctx) =>
       await ctx.reply(

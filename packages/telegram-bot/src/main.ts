@@ -5,8 +5,9 @@ import { ProductApiRequest } from './api/productApiRequest';
 import { loadHandlers } from './handlers';
 import { AIChat } from './ai/ai';
 import { Client } from '@gradio/client';
-import { MyContext, superWizard } from './scenes/qwe';
+
 import { loadScenes } from './scenes';
+import { MyContext } from './types';
 
 async function bootstrap() {
   console.log(TG_BOT_CONFIG);
@@ -21,11 +22,12 @@ async function bootstrap() {
     ctx.botInstance = bot;
     return next();
   });
+
   await loadScenes(bot);
   bot.ai = new AIChat();
   bot.api = new ProductApiRequest();
   await loadHandlers(bot);
-  // console.log(bot.ai);
+
   bot.launch(() => console.log('bot started'));
 }
 

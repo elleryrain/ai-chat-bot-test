@@ -2,13 +2,14 @@ import { connect, JSONCodec } from 'nats';
 import { NATS_CONFIG } from '../config/env.config';
 import { ProductsService } from '../products/products.service';
 import { TCrudProducts, TCrudResponse } from '@shared';
+import { CacheService } from '../redis/cache.provider';
 
 const jc = JSONCodec<TCrudProducts>();
 const responseJc = JSONCodec<TCrudResponse>();
 export class NatsHandler {
   private service: ProductsService;
   constructor() {
-    this.service = new ProductsService();
+    this.service = new ProductsService(new CacheService());
   }
 
   async start() {

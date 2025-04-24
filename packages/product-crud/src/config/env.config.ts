@@ -9,3 +9,7 @@ export const NATS_CONFIG = {
 export const POSTGRES_CONFIG = {
   databaseUrl: String(process.env.DATABASE_URL),
 };
+
+export const REDIS_CONFIG = {
+  url: String(process.env.REDIS_URL),
+};

@@ -10,7 +10,8 @@
     "dev:bot": "yarn nx serve telegram-bot",
     "db:seed": "yarn tsx apps/shared/src/lib/drizzle/seed.ts",
     "db:generate": "yarn drizzle-kit generate --config=apps/shared/drizzle.config.ts",
-    "db:migrate": "yarn drizzle-kit migrate --config=apps/shared/drizzle.config.ts"
+    "db:migrate": "yarn drizzle-kit migrate --config=apps/shared/drizzle.config.ts",
+    "build": "yarn nx run-many -t build --parallel 3"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

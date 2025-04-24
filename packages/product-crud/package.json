@@ -2,37 +2,65 @@
   "name": "@ai-chatbot-bot-test-2/product-crud",
   "version": "0.0.1",
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "development": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
   "nx": {
     "name": "product-crud",
     "targets": {
       "build": {
-        "executor": "@nx/js:swc",
+        "executor": "@nx/esbuild:esbuild",
         "outputs": [
           "{options.outputPath}"
         ],
+        "defaultConfiguration": "production",
         "options": {
+          "platform": "node",
           "outputPath": "packages/product-crud/dist",
-          "tsConfig": "packages/product-crud/tsconfig.lib.json",
-          "packageJson": "packages/product-crud/package.json",
-          "main": "packages/product-crud/src/index.ts",
-          "stripLeadingPaths": true
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "packages/product-crud/src/main.ts",
+          "tsConfig": "packages/product-crud/tsconfig.app.json",
+          "assets": [
+            "packages/product-crud/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "product-crud:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "product-crud:build:development"
+          },
+          "production": {
+            "buildTarget": "product-crud:build:production"
+          }
         }
       }
     }
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
   }
 }

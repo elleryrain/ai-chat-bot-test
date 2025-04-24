@@ -4,17 +4,9 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/product-api"
-    },
-    {
-      "path": "./packages/product-api"
-    },
-    {
       "path": "./packages/product-crud"
     },
-    {
-      "path": "./packages/telegram-bot"
-    },
+
     {
       "path": "./packages/shared"
     }

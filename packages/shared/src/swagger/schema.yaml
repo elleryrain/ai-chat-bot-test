@@ -5,7 +5,7 @@ info:
   description: REST API for managing products, based on NATS CRUD types
 
 paths:
-  /products:
+  /api/products:
     get:
       summary: Retrieve all products
       operationId: getAllProducts
@@ -53,7 +53,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /products/{id}:
+  /api/products/{id}:
     get:
       summary: Retrieve a product by ID
       operationId: getProductById

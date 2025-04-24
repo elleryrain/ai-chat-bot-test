@@ -43,12 +43,24 @@ export type TCrudProducts =
   | IReadProduct
   | IReadAllCrud;
 
-export type TCrudResponse = {
+export type TCrudResponse<T = unknown> = {
   status: 'success' | 'error';
-  data?: unknown;
+  data?: T;
   message?: string;
 };
 
 export type TUpdateProduct = Partial<
   Omit<typeof productsTable.$inferSelect, 'id'>
 > & { id: number };
+
+export type TShortProduct = {
+  id: number;
+  name: string;
+};
+
+export type TExtendedProduct = {
+  id: number;
+  name: string;
+  price?: number;
+  desc?: string;
+};

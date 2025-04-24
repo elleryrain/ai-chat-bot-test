@@ -8,7 +8,9 @@ export class ProductsService {
   private db = new Database().db;
 
   async getAllProducts() {
-    const products = await this.db.select().from(productsTable);
+    const products = await this.db
+      .select({ id: productsTable.id, name: productsTable.name })
+      .from(productsTable);
     return products;
   }
 
@@ -35,11 +37,14 @@ export class ProductsService {
   }
 
   async updateProduct(productData: TUpdateProduct) {
-    const newProduct = await this.db
-      .update(productsTable)
-      .set({ ...productData })
-      .where(eq(productsTable.id, productData.id))
-      .returning();
+    const { id, ...updateData } = productData;
+    const newProduct = (
+      await this.db
+        .update(productsTable)
+        .set({ ...updateData })
+        .where(eq(productsTable.id, id))
+        .returning()
+    )[0];
     return newProduct;
   }
 }

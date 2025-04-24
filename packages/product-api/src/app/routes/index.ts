@@ -2,9 +2,13 @@ import {
   ErrorResponseSchema,
   IdParamSchema,
   ProductCreateSchema,
-  ProductSchema,
+  ExtendedProductSchema,
   ProductUpdateSchema,
   TCrudResponse,
+  TExtendedProduct,
+  TShortProduct,
+  ShortProductSchema,
+  DeleteResponseSchema,
 } from '@shared';
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
@@ -17,7 +21,7 @@ export async function appRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get('/api/products', {
     schema: {
       response: {
-        200: z.array(ProductSchema),
+        200: z.array(ShortProductSchema),
         500: ErrorResponseSchema,
       },
     },
@@ -29,9 +33,9 @@ export async function appRoutes(app: FastifyInstance) {
         { timeout: 1000 }
       );
 
-      const data = jc.decode(response.data);
-
-      return reply.send(data);
+      const data = jc.decode(response.data) as TCrudResponse<TShortProduct[]>;
+      console.log(data);
+      return reply.send(data.data);
     },
   });
 
@@ -39,7 +43,7 @@ export async function appRoutes(app: FastifyInstance) {
     schema: {
       body: ProductCreateSchema,
       response: {
-        201: ProductSchema,
+        201: ExtendedProductSchema,
         400: ErrorResponseSchema,
         500: ErrorResponseSchema,
       },
@@ -52,8 +56,8 @@ export async function appRoutes(app: FastifyInstance) {
         jc.encode(requestMsg),
         { timeout: 10000 }
       );
-      const data = jc.decode(response.data);
-      return reply.send(data);
+      const data = jc.decode(response.data) as TCrudResponse<TExtendedProduct>;
+      return reply.send(data.data);
     },
   });
 
@@ -61,7 +65,7 @@ export async function appRoutes(app: FastifyInstance) {
     schema: {
       params: IdParamSchema,
       response: {
-        200: ProductSchema,
+        200: ExtendedProductSchema,
         404: ErrorResponseSchema,
         500: ErrorResponseSchema,
       },
@@ -74,8 +78,8 @@ export async function appRoutes(app: FastifyInstance) {
         jc.encode(requestMsg),
         { timeout: 1000 }
       );
-      const data = jc.decode(response.data);
-      return reply.send(data);
+      const data = jc.decode(response.data) as TCrudResponse<TExtendedProduct>;
+      return reply.send(data.data);
     },
   });
 
@@ -84,7 +88,7 @@ export async function appRoutes(app: FastifyInstance) {
       params: IdParamSchema,
       body: ProductUpdateSchema,
       response: {
-        200: ProductSchema,
+        200: ExtendedProductSchema,
         400: ErrorResponseSchema,
         404: ErrorResponseSchema,
         500: ErrorResponseSchema,
@@ -99,8 +103,8 @@ export async function appRoutes(app: FastifyInstance) {
         'product.crud',
         jc.encode(requestMsg)
       );
-      const data = jc.decode(response.data);
-      return reply.send(data);
+      const data = jc.decode(response.data) as TCrudResponse<TExtendedProduct>;
+      return reply.send(data.data);
     },
   });
 
@@ -108,7 +112,7 @@ export async function appRoutes(app: FastifyInstance) {
     schema: {
       params: IdParamSchema,
       response: {
-        200: unknown,
+        200: DeleteResponseSchema,
         404: ErrorResponseSchema,
         500: ErrorResponseSchema,
       },
@@ -123,8 +127,8 @@ export async function appRoutes(app: FastifyInstance) {
         jc.encode(requestMsg)
       );
 
-      const data = jc.decode(response.data);
-      reply.code(200).send(data);
+      const data = jc.decode(response.data) as TCrudResponse<string>;
+      reply.code(200).send(data.data);
     },
   });
 }

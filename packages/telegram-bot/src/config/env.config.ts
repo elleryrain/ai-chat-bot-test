@@ -11,5 +11,7 @@ export const API_CONFIG = {
 };
 
 export const AI_CONFIG = {
-  client_url: String(process.env.AI_GRADIO_CLIENT_URL),
+  aiApiUrl: String(process.env.AI_API_URL),
+  aiApiKey: String(process.env.AI_API_KEY),
+  aiModel: String(process.env.AI_MODEL),
 };

@@ -32,7 +32,15 @@ export class ProductsService {
   }
 
   async deleteProduct(productId: number) {
-    await this.db.delete(productsTable).where(eq(productsTable.id, productId));
+    const product = (
+      await this.db
+        .delete(productsTable)
+        .where(eq(productsTable.id, productId))
+        .returning()
+    )[0];
+    if (!product) {
+      return 'product not found';
+    }
     return 'delete was successful';
   }
 

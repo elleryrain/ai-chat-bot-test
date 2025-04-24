@@ -55,7 +55,7 @@ export type TUpdateProduct = Partial<
 
 export type TShortProduct = {
   id: number;
-  name: string;
+  name?: string;
 };
 
 export type TExtendedProduct = {

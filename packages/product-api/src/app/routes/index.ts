@@ -19,18 +19,19 @@ const jc = JSONCodec();
 
 export async function appRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get('/api/products', {
-    schema: {
-      response: {
-        200: z.array(ShortProductSchema),
-        500: ErrorResponseSchema,
-      },
-    },
+    // schema: {
+    // response: {
+    // 200: z.array(ShortProductSchema),
+    // 500: ErrorResponseSchema,
+    // },
+    // },
     handler: async (req, reply) => {
       const requestMsg = { operation: 'read-all' };
+
       const response = await req.server.nc.request(
         'product.crud',
         jc.encode(requestMsg),
-        { timeout: 1000 }
+        { timeout: 10000 }
       );
 
       const data = jc.decode(response.data) as TCrudResponse<TShortProduct[]>;

@@ -18,6 +18,10 @@
     "name": "shared"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.42.0",
+    "tslib": "^2.3.0",
+    "zod": "^3.24.3",
+    "drizzle-kit": "^0.31.0"
   }
 }

@@ -1,16 +1,10 @@
-import { createClient, RedisClientType } from 'redis';
+import { Redis } from 'ioredis';
 import { REDIS_CONFIG } from '../config/env.config';
 
 export class CacheService {
-  private client: RedisClientType;
+  private client = new Redis(REDIS_CONFIG.url);
 
   constructor() {
-    this.client = createClient({
-      url: REDIS_CONFIG.url,
-    });
-    if (!this.client.isOpen) {
-      this.client.connect();
-    }
     this.client.on('error', (err) => {
       console.error('Redis Client Error:', err);
     });
@@ -41,7 +35,7 @@ export class CacheService {
 
   async set(key: string, value: string, ttl?: number): Promise<void> {
     if (ttl) {
-      await this.client.set(key, value, { EX: ttl });
+      await this.client.set(key, value);
     } else {
       await this.client.set(key, value);
     }

@@ -11,6 +11,7 @@ export class AIChat {
   private openAi: OpenAI;
   private model: string;
   constructor() {
+    console.log(AI_CONFIG);
     this.openAi = new OpenAI({
       apiKey: AI_CONFIG.aiApiKey,
       baseURL: AI_CONFIG.aiApiUrl,
@@ -18,6 +19,7 @@ export class AIChat {
     this.model = AI_CONFIG.aiModel;
   }
   private async completion(content: string) {
+    console.log(content);
     console.log(`[AI_CHAT] start creating message`);
     const data = await this.openAi.chat.completions.create({
       model: this.model,

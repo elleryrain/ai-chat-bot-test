@@ -33,6 +33,7 @@ export class NatsHandler {
   }
 
   private async handleRequest(request: TCrudProducts): Promise<TCrudResponse> {
+    console.log(request.operation);
     switch (request.operation) {
       case 'create': {
         const res = await this.service.insertProduct(request.data);

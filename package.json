@@ -8,10 +8,12 @@
     "dev:crud": "yarn nx serve product-crud",
     "dev:api": "yarn nx serve product-api",
     "dev:bot": "yarn nx serve telegram-bot",
-    "db:seed": "yarn tsx apps/shared/src/lib/drizzle/seed.ts",
-    "db:generate": "yarn drizzle-kit generate --config=apps/shared/drizzle.config.ts",
-    "db:migrate": "yarn drizzle-kit migrate --config=apps/shared/drizzle.config.ts",
-    "build": "yarn nx run-many -t build --parallel 3"
+    "db:seed": "yarn tsx packages/shared/src/lib/drizzle/seed.ts",
+    "db:generate": "yarn drizzle-kit generate --config=packages/shared/drizzle.config.ts",
+    "db:migrate": "yarn drizzle-kit migrate --config=packages/shared/drizzle.config.ts",
+    "build": "yarn nx run-many -t build --parallel 3",
+    "dc:up": "docker-compose up -d",
+    "dc:down": "docker-compose down"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
@@ -51,11 +53,13 @@
     "fastify": "^5.3.2",
     "fastify-plugin": "~5.0.1",
     "fastify-type-provider-zod": "^4.0.2",
+    "ioredis": "^5.6.1",
     "nats": "^2.29.3",
     "openai": "^4.96.0",
     "pg": "^8.15.1",
     "redis": "^4.7.0",
     "telegraf": "^4.16.3",
+    "tsx": "^4.19.3",
     "zod": "^3.24.3"
   }
 }

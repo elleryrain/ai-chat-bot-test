@@ -15,13 +15,10 @@ export class ProductsService {
 
   async getAllProducts() {
     const cacheKey = 'all_products';
-    try {
-      const cachedProducts = await this.cacheService.get(cacheKey);
-      if (cachedProducts) {
-        return JSON.parse(cachedProducts);
-      }
-    } catch (err) {
-      console.error('Redis get error:', err);
+
+    const cachedProducts = await this.cacheService.get(cacheKey);
+    if (cachedProducts) {
+      return JSON.parse(cachedProducts);
     }
 
     const products = await this.db

@@ -35,8 +35,8 @@ export const superWizardUpdateProduct = new Scenes.WizardScene<
     }
     ctx.session.id = Number(ctx.message.text);
     console.log(ctx.message.text);
-    ctx.reply('Сохранено');
-    ctx.reply('Введите название предмета');
+    await ctx.reply('Сохранено');
+    await ctx.reply('Введите название предмета');
     return ctx.wizard.next();
   },
 
@@ -46,8 +46,8 @@ export const superWizardUpdateProduct = new Scenes.WizardScene<
     }
     ctx.session.name = ctx.message.text;
     console.log(ctx.message.text);
-    ctx.reply('Сохранено');
-    ctx.reply('Введите цену предмета');
+    await ctx.reply('Сохранено');
+    await ctx.reply('Введите цену предмета');
     return ctx.wizard.next();
   },
 
@@ -71,7 +71,7 @@ export const superWizardUpdateProduct = new Scenes.WizardScene<
     await ctx.reply('Сохранено');
 
     const product = await ctx.botInstance.api.updateProduct(ctx.session);
-    ctx.reply(JSON.stringify(product));
+    await ctx.reply(JSON.stringify(product));
     return ctx.scene.leave();
   }
 );

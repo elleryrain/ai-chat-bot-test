@@ -1,7 +1,7 @@
 Запуск проекта
 
 Загрука пакетов:
-corepack enable
+corepack enable \n
 yarn
 
 Чтобы запустить проект, нужно сначала поставить миграции. Они ставятся в базу из поля DATABASE_URL в .env с помощью команды yarn db:migrate
@@ -9,5 +9,5 @@ yarn
 Опционально: чтобы запустить сид скрипт с тестовыми данными для бд yarn db:seed
 
 Запуск проекта:
-docker-compose up -d
+docker-compose up -d \n
 yarn dev

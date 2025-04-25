@@ -27,7 +27,7 @@ export async function loadCommands(bot: Telegraf<MyContext>) {
     await ctx.reply(message);
   });
 
-  bot.hears(/\/delete-product (\d+)/, async (ctx) => {
+  bot.hears(/\/deleteProduct (\d+)/, async (ctx) => {
     const productId = parseInt(ctx.match[1]);
     console.log(123);
     const message = await bot.api.deleteProduct(productId);
